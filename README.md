@@ -1,2 +1,3 @@
 # rails-box
-Barebones box for Rails development.
+
+Barebones Vagrant box for Rails development.
