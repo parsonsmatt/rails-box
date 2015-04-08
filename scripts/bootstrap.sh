@@ -17,7 +17,10 @@ if [ -f Gemfile ]; then
 	rake db:setup
 else
 	echo "Initializing Rails app..."
+	mv .gitignore backup.gitignore
 	rails new . --database=postgresql
+	cat backup.gitignore >> .gitignore
+	rm backup.gitignore
 fi
 
 gem install foreman
