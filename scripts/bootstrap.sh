@@ -1,8 +1,10 @@
 #!/bin/bash 
 
 # Install rvm and ruby:
+RUBY=ruby-2.2.2
+
 gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
-\curl -sSL https://get.rvm.io | bash -s stable --ruby=ruby-2.2.2 --with-default-gems="bundler rails"
+\curl -sSL https://get.rvm.io | bash -s stable --ruby=$RUBY --with-default-gems="bundler rails"
 echo 'gem: --no-document' >> ~/.gemrc
 echo "Sourcing RVM.."
 source ~/.rvm/scripts/rvm
@@ -13,6 +15,10 @@ cd /vagrant
 
 if [ -f Gemfile ]; then
 	echo "Doing bundle install..."
+        if [ -f .ruby-gemset ]; then
+                GEMSET=`cat .ruby-gemset`
+                rvm use $RUBY@$GEMSET --create
+        fi
 	bundle install
 	rake db:setup
 else
